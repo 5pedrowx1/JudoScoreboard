@@ -370,7 +370,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "FormDisplay";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Judo Scoreboard - IJF Style";
+            Text = "Judo Scoreboard ";
             WindowState = FormWindowState.Maximized;
             PanelPrincipal.ResumeLayout(false);
             PanelBranco.ResumeLayout(false);

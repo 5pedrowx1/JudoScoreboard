@@ -1,4 +1,5 @@
-﻿using JudoScoreboard.Forms.Controls;
+﻿using JudoScoreboard.Core;
+using JudoScoreboard.Forms.Controls;
 
 namespace JudoScoreboard.Forms
 {
@@ -57,13 +58,21 @@ namespace JudoScoreboard.Forms
             scoreControl = new UC_Score();
             scoreControl.Dock = DockStyle.Fill;
             scoreControl.OnBackToSetup += Score_OnBackToSetup;
-
-            // scoreControl.OnMatchDataChanged += Score_OnMatchDataChanged;
-
+            scoreControl.OnMatchDataChanged += Score_OnMatchDataChanged;
             Panel_UC.Controls.Add(scoreControl);
-
-            // Iniciar o combate
             scoreControl.IniciarCombate(nomeAzul, nomeBranco, tempo, categoria);
+        }
+
+        private void Score_OnMatchDataChanged(MatchData data)
+        {
+            // Sincronizar com o FormDisplay
+            DisplayForm?.AtualizarDisplay(data);
+
+            // Aqui você pode adicionar mais lógica se necessário:
+            // - Salvar em banco de dados
+            // - Enviar para API
+            // - Logar em arquivo
+            // - Transmitir via rede
         }
 
         private void Score_OnBackToSetup()
@@ -73,7 +82,6 @@ namespace JudoScoreboard.Forms
 
         private void BtnClose_Click(object sender, EventArgs e)
         {
-            // Perguntar confirmação se houver combate ativo
             if (scoreControl != null)
             {
                 var result = MessageBox.Show(
