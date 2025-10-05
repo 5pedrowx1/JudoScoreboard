@@ -32,170 +32,186 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-
-            // Timer
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges18 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges19 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges20 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges21 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges22 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges23 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges24 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges25 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges26 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             timer = new System.Windows.Forms.Timer(components);
-
-            // Labels - Nomes
             lblNomeAzul = new Guna.UI2.WinForms.Guna2HtmlLabel();
             lblNomeBranco = new Guna.UI2.WinForms.Guna2HtmlLabel();
             lblCategoria = new Guna.UI2.WinForms.Guna2HtmlLabel();
             lblTimer = new Guna.UI2.WinForms.Guna2HtmlLabel();
-
-            // Pontuações Azul
             lblIpponAzul = new Guna.UI2.WinForms.Guna2HtmlLabel();
             lblWazaAzul = new Guna.UI2.WinForms.Guna2HtmlLabel();
             lblYukoAzul = new Guna.UI2.WinForms.Guna2HtmlLabel();
             lblShidoAzul = new Guna.UI2.WinForms.Guna2HtmlLabel();
-
-            // Pontuações Branco
             lblIpponBranco = new Guna.UI2.WinForms.Guna2HtmlLabel();
             lblWazaBranco = new Guna.UI2.WinForms.Guna2HtmlLabel();
             lblYukoBranco = new Guna.UI2.WinForms.Guna2HtmlLabel();
             lblShidoBranco = new Guna.UI2.WinForms.Guna2HtmlLabel();
-
-            // Botões Azul
             btnIpponAzul = new Guna.UI2.WinForms.Guna2Button();
             btnWazaAzul = new Guna.UI2.WinForms.Guna2Button();
             btnYukoAzul = new Guna.UI2.WinForms.Guna2Button();
             btnShidoAzul = new Guna.UI2.WinForms.Guna2Button();
             btnRemoveAzul = new Guna.UI2.WinForms.Guna2Button();
-
-            // Botões Branco
             btnIpponBranco = new Guna.UI2.WinForms.Guna2Button();
             btnWazaBranco = new Guna.UI2.WinForms.Guna2Button();
             btnYukoBranco = new Guna.UI2.WinForms.Guna2Button();
             btnShidoBranco = new Guna.UI2.WinForms.Guna2Button();
             btnRemoveBranco = new Guna.UI2.WinForms.Guna2Button();
-
-            // Botões Controle
             btnPlayPause = new Guna.UI2.WinForms.Guna2Button();
             btnReset = new Guna.UI2.WinForms.Guna2Button();
             btnVoltar = new Guna.UI2.WinForms.Guna2Button();
-
+            lblVitoria = new Guna.UI2.WinForms.Guna2HtmlLabel();
             SuspendLayout();
-
-            // Timer
+            // 
+            // timer
+            // 
             timer.Interval = 1000;
             timer.Tick += Timer_Tick;
-
+            // 
             // lblNomeAzul
+            // 
             lblNomeAzul.BackColor = Color.Transparent;
             lblNomeAzul.Font = new Font("MV Boli", 16F, FontStyle.Bold);
             lblNomeAzul.ForeColor = Color.DarkBlue;
             lblNomeAzul.Location = new Point(50, 20);
             lblNomeAzul.Name = "lblNomeAzul";
-            lblNomeAzul.Size = new Size(200, 30);
+            lblNomeAzul.Size = new Size(145, 30);
             lblNomeAzul.TabIndex = 0;
             lblNomeAzul.Text = "Lutador Azul";
-
+            // 
             // lblNomeBranco
+            // 
             lblNomeBranco.BackColor = Color.Transparent;
             lblNomeBranco.Font = new Font("MV Boli", 16F, FontStyle.Bold);
             lblNomeBranco.ForeColor = Color.White;
             lblNomeBranco.Location = new Point(550, 20);
             lblNomeBranco.Name = "lblNomeBranco";
-            lblNomeBranco.Size = new Size(200, 30);
+            lblNomeBranco.Size = new Size(168, 30);
             lblNomeBranco.TabIndex = 1;
             lblNomeBranco.Text = "Lutador Branco";
-
+            // 
             // lblCategoria
+            // 
             lblCategoria.BackColor = Color.Transparent;
             lblCategoria.Font = new Font("MV Boli", 12F);
             lblCategoria.ForeColor = Color.Gray;
             lblCategoria.Location = new Point(330, 25);
             lblCategoria.Name = "lblCategoria";
-            lblCategoria.Size = new Size(140, 25);
+            lblCategoria.Size = new Size(72, 23);
             lblCategoria.TabIndex = 2;
             lblCategoria.Text = "Categoria";
             lblCategoria.TextAlignment = ContentAlignment.MiddleCenter;
-
+            // 
             // lblTimer
+            // 
             lblTimer.BackColor = Color.Transparent;
-            lblTimer.Font = new Font("Digital-7", 48F, FontStyle.Bold);
+            lblTimer.Font = new Font("Microsoft Sans Serif", 48F, FontStyle.Bold);
             lblTimer.ForeColor = Color.Red;
             lblTimer.Location = new Point(310, 70);
             lblTimer.Name = "lblTimer";
-            lblTimer.Size = new Size(180, 70);
+            lblTimer.Size = new Size(170, 75);
             lblTimer.TabIndex = 3;
             lblTimer.Text = "03:00";
             lblTimer.TextAlignment = ContentAlignment.MiddleCenter;
-
-            // AZUL - Pontuações
+            // 
+            // lblIpponAzul
+            // 
             lblIpponAzul.BackColor = Color.Transparent;
             lblIpponAzul.Font = new Font("MV Boli", 32F, FontStyle.Bold);
             lblIpponAzul.ForeColor = Color.DarkBlue;
             lblIpponAzul.Location = new Point(70, 80);
             lblIpponAzul.Name = "lblIpponAzul";
-            lblIpponAzul.Size = new Size(60, 50);
+            lblIpponAzul.Size = new Size(34, 57);
             lblIpponAzul.TabIndex = 4;
             lblIpponAzul.Text = "0";
-
+            // 
+            // lblWazaAzul
+            // 
             lblWazaAzul.BackColor = Color.Transparent;
             lblWazaAzul.Font = new Font("MV Boli", 32F, FontStyle.Bold);
             lblWazaAzul.ForeColor = Color.DarkBlue;
             lblWazaAzul.Location = new Point(70, 150);
             lblWazaAzul.Name = "lblWazaAzul";
-            lblWazaAzul.Size = new Size(60, 50);
+            lblWazaAzul.Size = new Size(34, 57);
             lblWazaAzul.TabIndex = 5;
             lblWazaAzul.Text = "0";
-
+            // 
+            // lblYukoAzul
+            // 
             lblYukoAzul.BackColor = Color.Transparent;
             lblYukoAzul.Font = new Font("MV Boli", 32F, FontStyle.Bold);
             lblYukoAzul.ForeColor = Color.DarkBlue;
             lblYukoAzul.Location = new Point(70, 220);
             lblYukoAzul.Name = "lblYukoAzul";
-            lblYukoAzul.Size = new Size(60, 50);
+            lblYukoAzul.Size = new Size(34, 57);
             lblYukoAzul.TabIndex = 6;
             lblYukoAzul.Text = "0";
-
+            // 
+            // lblShidoAzul
+            // 
             lblShidoAzul.BackColor = Color.Transparent;
             lblShidoAzul.Font = new Font("MV Boli", 32F, FontStyle.Bold);
             lblShidoAzul.ForeColor = Color.Yellow;
             lblShidoAzul.Location = new Point(70, 290);
             lblShidoAzul.Name = "lblShidoAzul";
-            lblShidoAzul.Size = new Size(60, 50);
+            lblShidoAzul.Size = new Size(34, 57);
             lblShidoAzul.TabIndex = 7;
             lblShidoAzul.Text = "0";
-
-            // BRANCO - Pontuações
+            // 
+            // lblIpponBranco
+            // 
             lblIpponBranco.BackColor = Color.Transparent;
             lblIpponBranco.Font = new Font("MV Boli", 32F, FontStyle.Bold);
             lblIpponBranco.ForeColor = Color.White;
             lblIpponBranco.Location = new Point(670, 80);
             lblIpponBranco.Name = "lblIpponBranco";
-            lblIpponBranco.Size = new Size(60, 50);
+            lblIpponBranco.Size = new Size(34, 57);
             lblIpponBranco.TabIndex = 8;
             lblIpponBranco.Text = "0";
-
+            // 
+            // lblWazaBranco
+            // 
             lblWazaBranco.BackColor = Color.Transparent;
             lblWazaBranco.Font = new Font("MV Boli", 32F, FontStyle.Bold);
             lblWazaBranco.ForeColor = Color.White;
             lblWazaBranco.Location = new Point(670, 150);
             lblWazaBranco.Name = "lblWazaBranco";
-            lblWazaBranco.Size = new Size(60, 50);
+            lblWazaBranco.Size = new Size(34, 57);
             lblWazaBranco.TabIndex = 9;
             lblWazaBranco.Text = "0";
-
+            // 
+            // lblYukoBranco
+            // 
             lblYukoBranco.BackColor = Color.Transparent;
             lblYukoBranco.Font = new Font("MV Boli", 32F, FontStyle.Bold);
             lblYukoBranco.ForeColor = Color.White;
             lblYukoBranco.Location = new Point(670, 220);
             lblYukoBranco.Name = "lblYukoBranco";
-            lblYukoBranco.Size = new Size(60, 50);
+            lblYukoBranco.Size = new Size(34, 57);
             lblYukoBranco.TabIndex = 10;
             lblYukoBranco.Text = "0";
-
+            // 
+            // lblShidoBranco
+            // 
             lblShidoBranco.BackColor = Color.Transparent;
             lblShidoBranco.Font = new Font("MV Boli", 32F, FontStyle.Bold);
             lblShidoBranco.ForeColor = Color.Yellow;
             lblShidoBranco.Location = new Point(670, 290);
             lblShidoBranco.Name = "lblShidoBranco";
-            lblShidoBranco.Size = new Size(60, 50);
+            lblShidoBranco.Size = new Size(34, 57);
             lblShidoBranco.TabIndex = 11;
             lblShidoBranco.Text = "0";
-
-            // AZUL - Botões
+            // 
+            // btnIpponAzul
+            // 
             btnIpponAzul.BorderRadius = 5;
             btnIpponAzul.CustomizableEdges = customizableEdges1;
             btnIpponAzul.FillColor = Color.DarkBlue;
@@ -208,7 +224,9 @@
             btnIpponAzul.TabIndex = 12;
             btnIpponAzul.Text = "IPPON";
             btnIpponAzul.Click += BtnIpponAzul_Click;
-
+            // 
+            // btnWazaAzul
+            // 
             btnWazaAzul.BorderRadius = 5;
             btnWazaAzul.CustomizableEdges = customizableEdges3;
             btnWazaAzul.FillColor = Color.DarkBlue;
@@ -221,7 +239,9 @@
             btnWazaAzul.TabIndex = 13;
             btnWazaAzul.Text = "WAZA-ARI";
             btnWazaAzul.Click += BtnWazaAzul_Click;
-
+            // 
+            // btnYukoAzul
+            // 
             btnYukoAzul.BorderRadius = 5;
             btnYukoAzul.CustomizableEdges = customizableEdges5;
             btnYukoAzul.FillColor = Color.DarkBlue;
@@ -234,7 +254,9 @@
             btnYukoAzul.TabIndex = 14;
             btnYukoAzul.Text = "YUKO";
             btnYukoAzul.Click += BtnYukoAzul_Click;
-
+            // 
+            // btnShidoAzul
+            // 
             btnShidoAzul.BorderRadius = 5;
             btnShidoAzul.CustomizableEdges = customizableEdges7;
             btnShidoAzul.FillColor = Color.Orange;
@@ -247,7 +269,9 @@
             btnShidoAzul.TabIndex = 15;
             btnShidoAzul.Text = "SHIDO";
             btnShidoAzul.Click += BtnShidoAzul_Click;
-
+            // 
+            // btnRemoveAzul
+            // 
             btnRemoveAzul.BorderRadius = 5;
             btnRemoveAzul.CustomizableEdges = customizableEdges9;
             btnRemoveAzul.FillColor = Color.Red;
@@ -260,8 +284,9 @@
             btnRemoveAzul.TabIndex = 16;
             btnRemoveAzul.Text = "Remover";
             btnRemoveAzul.Click += BtnRemoveAzul_Click;
-
-            // BRANCO - Botões
+            // 
+            // btnIpponBranco
+            // 
             btnIpponBranco.BorderRadius = 5;
             btnIpponBranco.CustomizableEdges = customizableEdges11;
             btnIpponBranco.FillColor = Color.White;
@@ -274,7 +299,9 @@
             btnIpponBranco.TabIndex = 17;
             btnIpponBranco.Text = "IPPON";
             btnIpponBranco.Click += BtnIpponBranco_Click;
-
+            // 
+            // btnWazaBranco
+            // 
             btnWazaBranco.BorderRadius = 5;
             btnWazaBranco.CustomizableEdges = customizableEdges13;
             btnWazaBranco.FillColor = Color.White;
@@ -287,85 +314,118 @@
             btnWazaBranco.TabIndex = 18;
             btnWazaBranco.Text = "WAZA-ARI";
             btnWazaBranco.Click += BtnWazaBranco_Click;
-
+            // 
+            // btnYukoBranco
+            // 
             btnYukoBranco.BorderRadius = 5;
+            btnYukoBranco.CustomizableEdges = customizableEdges15;
             btnYukoBranco.FillColor = Color.White;
             btnYukoBranco.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnYukoBranco.ForeColor = Color.Black;
             btnYukoBranco.Location = new Point(550, 220);
             btnYukoBranco.Name = "btnYukoBranco";
+            btnYukoBranco.ShadowDecoration.CustomizableEdges = customizableEdges16;
             btnYukoBranco.Size = new Size(100, 45);
             btnYukoBranco.TabIndex = 19;
             btnYukoBranco.Text = "YUKO";
             btnYukoBranco.Click += BtnYukoBranco_Click;
-
+            // 
+            // btnShidoBranco
+            // 
             btnShidoBranco.BorderRadius = 5;
+            btnShidoBranco.CustomizableEdges = customizableEdges17;
             btnShidoBranco.FillColor = Color.Orange;
             btnShidoBranco.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnShidoBranco.ForeColor = Color.White;
             btnShidoBranco.Location = new Point(550, 290);
             btnShidoBranco.Name = "btnShidoBranco";
+            btnShidoBranco.ShadowDecoration.CustomizableEdges = customizableEdges18;
             btnShidoBranco.Size = new Size(100, 45);
             btnShidoBranco.TabIndex = 20;
             btnShidoBranco.Text = "SHIDO";
             btnShidoBranco.Click += BtnShidoBranco_Click;
-
+            // 
+            // btnRemoveBranco
+            // 
             btnRemoveBranco.BorderRadius = 5;
+            btnRemoveBranco.CustomizableEdges = customizableEdges19;
             btnRemoveBranco.FillColor = Color.Red;
             btnRemoveBranco.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnRemoveBranco.ForeColor = Color.White;
             btnRemoveBranco.Location = new Point(550, 350);
             btnRemoveBranco.Name = "btnRemoveBranco";
+            btnRemoveBranco.ShadowDecoration.CustomizableEdges = customizableEdges20;
             btnRemoveBranco.Size = new Size(100, 35);
             btnRemoveBranco.TabIndex = 21;
             btnRemoveBranco.Text = "Remover";
             btnRemoveBranco.Click += BtnRemoveBranco_Click;
-
-            // Controles
+            // 
+            // btnPlayPause
+            // 
             btnPlayPause.BorderRadius = 5;
-            btnPlayPause.CustomizableEdges = customizableEdges15;
+            btnPlayPause.CustomizableEdges = customizableEdges21;
             btnPlayPause.FillColor = Color.Green;
             btnPlayPause.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
             btnPlayPause.ForeColor = Color.White;
             btnPlayPause.Location = new Point(310, 160);
             btnPlayPause.Name = "btnPlayPause";
-            btnPlayPause.ShadowDecoration.CustomizableEdges = customizableEdges16;
+            btnPlayPause.ShadowDecoration.CustomizableEdges = customizableEdges22;
             btnPlayPause.Size = new Size(180, 55);
             btnPlayPause.TabIndex = 22;
             btnPlayPause.Text = "▶ INICIAR";
             btnPlayPause.Click += BtnPlayPause_Click;
-
-            btnReset.BorderRadius = 5;
+            // 
+            // btnReset
+            // 
             btnReset.BorderColor = Color.Gray;
+            btnReset.BorderRadius = 5;
             btnReset.BorderThickness = 2;
+            btnReset.CustomizableEdges = customizableEdges23;
             btnReset.FillColor = Color.FromArgb(25, 25, 25);
             btnReset.Font = new Font("Segoe UI", 11F);
             btnReset.ForeColor = Color.Gray;
             btnReset.Location = new Point(310, 235);
             btnReset.Name = "btnReset";
+            btnReset.ShadowDecoration.CustomizableEdges = customizableEdges24;
             btnReset.Size = new Size(180, 45);
             btnReset.TabIndex = 23;
             btnReset.Text = "↻ RESET";
             btnReset.Click += BtnReset_Click;
-
+            // 
+            // btnVoltar
+            // 
             btnVoltar.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnVoltar.BorderRadius = 5;
             btnVoltar.BorderColor = Color.Gray;
+            btnVoltar.BorderRadius = 5;
             btnVoltar.BorderThickness = 1;
+            btnVoltar.CustomizableEdges = customizableEdges25;
             btnVoltar.FillColor = Color.FromArgb(25, 25, 25);
             btnVoltar.Font = new Font("Segoe UI", 9F);
             btnVoltar.ForeColor = Color.Gray;
             btnVoltar.Location = new Point(20, 400);
             btnVoltar.Name = "btnVoltar";
+            btnVoltar.ShadowDecoration.CustomizableEdges = customizableEdges26;
             btnVoltar.Size = new Size(100, 35);
             btnVoltar.TabIndex = 24;
             btnVoltar.Text = "← Voltar";
             btnVoltar.Click += BtnVoltar_Click;
-
+            // 
+            // lblVitoria
+            // 
+            lblVitoria.BackColor = Color.Transparent;
+            lblVitoria.Font = new Font("MV Boli", 16F, FontStyle.Bold);
+            lblVitoria.ForeColor = Color.White;
+            lblVitoria.Location = new Point(312, 350);
+            lblVitoria.Name = "lblVitoria";
+            lblVitoria.Size = new Size(3, 2);
+            lblVitoria.TabIndex = 25;
+            // 
             // UC_Score
+            // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(25, 25, 25);
+            Controls.Add(lblVitoria);
             Controls.Add(btnVoltar);
             Controls.Add(btnReset);
             Controls.Add(btnPlayPause);
@@ -423,5 +483,6 @@
         private Guna.UI2.WinForms.Guna2Button btnPlayPause;
         private Guna.UI2.WinForms.Guna2Button btnReset;
         private Guna.UI2.WinForms.Guna2Button btnVoltar;
+        private Guna.UI2.WinForms.Guna2HtmlLabel lblVitoria;
     }
 }

@@ -16,6 +16,17 @@ namespace JudoScoreboard.Forms
 
         private void FormControl_Load(object sender, EventArgs e)
         {
+            if (DisplayForm == null)
+            {
+                DisplayForm = new FormDisplay();
+                DisplayForm.Show();
+
+                // Posicionar FormDisplay em tela cheia
+                DisplayForm.StartPosition = FormStartPosition.Manual;
+                DisplayForm.Location = Screen.PrimaryScreen!.Bounds.Location;
+                DisplayForm.WindowState = FormWindowState.Maximized;
+            }
+
             MostrarSetup();
         }
 
@@ -65,14 +76,8 @@ namespace JudoScoreboard.Forms
 
         private void Score_OnMatchDataChanged(MatchData data)
         {
-            // Sincronizar com o FormDisplay
             DisplayForm?.AtualizarDisplay(data);
-
-            // Aqui você pode adicionar mais lógica se necessário:
-            // - Salvar em banco de dados
-            // - Enviar para API
-            // - Logar em arquivo
-            // - Transmitir via rede
+            System.Diagnostics.Debug.WriteLine($"Atualizando display: {data.NomeAzul} vs {data.NomeBranco} - Tempo: {data.TempoRestante}");
         }
 
         private void Score_OnBackToSetup()
@@ -93,6 +98,7 @@ namespace JudoScoreboard.Forms
                 if (result == DialogResult.No)
                     return;
             }
+            DisplayForm?.Close();
 
             this.Dispose();
             Application.Exit();

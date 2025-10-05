@@ -1,35 +1,34 @@
-using JudoScoreboard.Forms;
-
 namespace JudoScoreboard
 {
     internal static class Program
     {
-        private static FormDisplay? displayForm;
-        private static FormControl? controlForm;
-
         [STAThread]
         static void Main()
         {
             ApplicationConfiguration.Initialize();
 
-            // Criar FormDisplay (Público - Tela cheia)
-            displayForm = new FormDisplay();
-            displayForm.Show();
+            // Criar o FormDisplay (tela pública)
+            var formDisplay = new Forms.FormDisplay();
+            formDisplay.Show();
 
-            // Criar FormControl (Arbitragem - Janela menor)
-            controlForm = new FormControl();
+            // Criar o FormControl (tela de arbitragem)
+            var formControl = new Forms.FormControl();
 
-            // Quando o controle fecha, fechar o display também
-            controlForm.FormClosed += (s, e) =>
-            {
-                displayForm?.Close();
-                Application.Exit();
-            };
+            // IMPORTANTE: Conectar os dois formulários
+            formControl.DisplayForm = formDisplay;
 
-            // Conectar sincronização (será implementado no FormControl)
-            // Quando houver mudança no FormControl, atualizar o FormDisplay
+            // Posicionar as janelas
+            // FormDisplay em tela cheia no monitor principal
+            formDisplay.StartPosition = FormStartPosition.Manual;
+            formDisplay.Location = Screen.PrimaryScreen!.Bounds.Location;
+            formDisplay.WindowState = FormWindowState.Maximized;
 
-            Application.Run(controlForm);
+            // FormControl em janela menor (pode ser em segundo monitor)
+            formControl.StartPosition = FormStartPosition.Manual;
+            formControl.Location = new Point(100, 100);
+            formControl.WindowState = FormWindowState.Normal;
+
+            Application.Run(formControl);
         }
     }
 }

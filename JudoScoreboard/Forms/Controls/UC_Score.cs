@@ -172,7 +172,7 @@ namespace JudoScoreboard.Forms.Controls
             ipponAzul++;
             ultimaAcao = LastAction.IpponAzul;
             AtualizarPontuacoes();
-            VerificarVitoria("AZUL", "IPPON");
+            VerificarVitoria("AZUL");
         }
 
         private void BtnWazaAzul_Click(object? sender, EventArgs e)
@@ -183,7 +183,7 @@ namespace JudoScoreboard.Forms.Controls
 
             if (wazaAzul >= 2)
             {
-                VerificarVitoria("AZUL", "2x WAZA-ARI = IPPON");
+                VerificarVitoria("AZUL");
             }
         }
 
@@ -204,7 +204,7 @@ namespace JudoScoreboard.Forms.Controls
 
                 if (shidoAzul == 3)
                 {
-                    VerificarVitoria("BRANCO", "HANSOKU-MAKE (3 Shidos do Azul)");
+                    VerificarVitoria("BRANCO");
                 }
             }
         }
@@ -236,7 +236,7 @@ namespace JudoScoreboard.Forms.Controls
             ipponBranco++;
             ultimaAcao = LastAction.IpponBranco;
             AtualizarPontuacoes();
-            VerificarVitoria("BRANCO", "IPPON");
+            VerificarVitoria("BRANCO");
         }
 
         private void BtnWazaBranco_Click(object? sender, EventArgs e)
@@ -247,7 +247,7 @@ namespace JudoScoreboard.Forms.Controls
 
             if (wazaBranco >= 2)
             {
-                VerificarVitoria("BRANCO", "2x WAZA-ARI = IPPON");
+                VerificarVitoria("BRANCO");
             }
         }
 
@@ -268,7 +268,7 @@ namespace JudoScoreboard.Forms.Controls
 
                 if (shidoBranco == 3)
                 {
-                    VerificarVitoria("AZUL", "HANSOKU-MAKE (3 Shidos do Branco)");
+                    VerificarVitoria("AZUL");
                 }
             }
         }
@@ -364,7 +364,7 @@ namespace JudoScoreboard.Forms.Controls
             }
         }
 
-        private void VerificarVitoria(string vencedor, string motivo)
+        private void VerificarVitoria(string vencedor)
         {
             timer.Stop();
             isRunning = false;
@@ -373,11 +373,7 @@ namespace JudoScoreboard.Forms.Controls
 
             string nomeVencedor = vencedor == "AZUL" ? nomeAzul : nomeBranco;
 
-            MessageBox.Show(
-                $"Vencedor: {nomeVencedor}\nMotivo: {motivo}",
-                "Fim do Combate",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+            lblVitoria.Text = $"Vencedor: {nomeVencedor} ({vencedor})";
 
             NotificarMudanca();
         }
