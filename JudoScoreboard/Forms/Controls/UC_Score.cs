@@ -9,21 +9,29 @@ namespace JudoScoreboard.Forms.Controls
 
         private int ipponAzul = 0;
         private int wazaAzul = 0;
+        private int yukoAzul = 0;
         private int shidoAzul = 0;
 
         private int ipponBranco = 0;
         private int wazaBranco = 0;
+        private int yukoBranco = 0;
         private int shidoBranco = 0;
 
-        private int tempoRestante; 
+        private int tempoRestante;
         private int tempoTotal;
         private bool isRunning = false;
+        private bool isGoldenScore = false;
 
         private string nomeAzul = "";
         private string nomeBranco = "";
         private string categoria = "";
 
-        private enum LastAction { None, IpponAzul, WazaAzul, ShidoAzul, IpponBranco, WazaBranco, ShidoBranco }
+        private enum LastAction
+        {
+            None,
+            IpponAzul, WazaAzul, YukoAzul, ShidoAzul,
+            IpponBranco, WazaBranco, YukoBranco, ShidoBranco
+        }
         private LastAction ultimaAcao = LastAction.None;
 
         public UC_Score()
@@ -38,6 +46,7 @@ namespace JudoScoreboard.Forms.Controls
             tempoTotal = tempo;
             tempoRestante = tempo;
             categoria = cat;
+            isGoldenScore = false;
 
             lblNomeAzul.Text = nomeAzul;
             lblNomeBranco.Text = nomeBranco;
@@ -60,31 +69,61 @@ namespace JudoScoreboard.Forms.Controls
             {
                 timer.Stop();
                 isRunning = false;
-                btnPlayPause.Text = "▶ INICIAR";
-                btnPlayPause.FillColor = Color.Green;
-                MessageBox.Show("Tempo Esgotado!", "Fim do Combate", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                DeterminarVencedor();
+                isGoldenScore = true;
+                btnPlayPause.Text = "▶ GOLDEN SCORE";
+                btnPlayPause.FillColor = Color.Gold;
+
+                var result = MessageBox.Show(
+                    "Tempo Esgotado! Iniciar Golden Score?",
+                    "Golden Score",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    IniciarGoldenScore();
+                }
+                else
+                {
+                    DeterminarVencedor();
+                }
             }
+        }
+
+        private void IniciarGoldenScore()
+        {
+            isGoldenScore = true;
+            tempoRestante = 0;
+            btnPlayPause.Text = "▶ CONTINUAR";
+            btnPlayPause.FillColor = Color.Gold;
+            NotificarMudanca();
         }
 
         private void AtualizarTimer()
         {
-            int minutos = tempoRestante / 60;
-            int segundos = tempoRestante % 60;
-            lblTimer.Text = $"{minutos:D2}:{segundos:D2}";
-
-            // Mudar cor quando menos de 30 segundos
-            if (tempoRestante <= 30 && tempoRestante > 0)
+            if (isGoldenScore && tempoRestante == 0)
             {
-                lblTimer.ForeColor = Color.Orange;
-            }
-            else if (tempoRestante == 0)
-            {
-                lblTimer.ForeColor = Color.Red;
+                lblTimer.Text = "G.S.";
+                lblTimer.ForeColor = Color.Gold;
             }
             else
             {
-                lblTimer.ForeColor = Color.LightGreen;
+                int minutos = tempoRestante / 60;
+                int segundos = tempoRestante % 60;
+                lblTimer.Text = $"{minutos:D2}:{segundos:D2}";
+
+                if (tempoRestante <= 30 && tempoRestante > 0)
+                {
+                    lblTimer.ForeColor = Color.Orange;
+                }
+                else if (tempoRestante == 0)
+                {
+                    lblTimer.ForeColor = Color.Red;
+                }
+                else
+                {
+                    lblTimer.ForeColor = Color.LightGreen;
+                }
             }
         }
 
@@ -92,10 +131,12 @@ namespace JudoScoreboard.Forms.Controls
         {
             lblIpponAzul.Text = ipponAzul.ToString();
             lblWazaAzul.Text = wazaAzul.ToString();
+            lblYukoAzul.Text = yukoAzul.ToString();
             lblShidoAzul.Text = shidoAzul.ToString();
 
             lblIpponBranco.Text = ipponBranco.ToString();
             lblWazaBranco.Text = wazaBranco.ToString();
+            lblYukoBranco.Text = yukoBranco.ToString();
             lblShidoBranco.Text = shidoBranco.ToString();
 
             NotificarMudanca();
@@ -111,11 +152,15 @@ namespace JudoScoreboard.Forms.Controls
                 TempoRestante = tempoRestante,
                 IpponAzul = ipponAzul,
                 WazaAzul = wazaAzul,
+                YukoAzul = yukoAzul,
                 ShidoAzul = shidoAzul,
                 IpponBranco = ipponBranco,
                 WazaBranco = wazaBranco,
+                YukoBranco = yukoBranco,
                 ShidoBranco = shidoBranco,
-                IsRunning = isRunning
+                IsRunning = isRunning,
+                IsGoldenScore = isGoldenScore,
+                Estado = isGoldenScore ? "Golden Score" : ""
             };
 
             OnMatchDataChanged?.Invoke(matchData);
@@ -136,11 +181,17 @@ namespace JudoScoreboard.Forms.Controls
             ultimaAcao = LastAction.WazaAzul;
             AtualizarPontuacoes();
 
-            // 2 Waza-ari = Ippon
             if (wazaAzul >= 2)
             {
                 VerificarVitoria("AZUL", "2x WAZA-ARI = IPPON");
             }
+        }
+
+        private void BtnYukoAzul_Click(object? sender, EventArgs e)
+        {
+            yukoAzul++;
+            ultimaAcao = LastAction.YukoAzul;
+            AtualizarPontuacoes();
         }
 
         private void BtnShidoAzul_Click(object? sender, EventArgs e)
@@ -151,7 +202,6 @@ namespace JudoScoreboard.Forms.Controls
                 ultimaAcao = LastAction.ShidoAzul;
                 AtualizarPontuacoes();
 
-                // 3 Shidos = Hansoku-make (desqualificação)
                 if (shidoAzul == 3)
                 {
                     VerificarVitoria("BRANCO", "HANSOKU-MAKE (3 Shidos do Azul)");
@@ -161,7 +211,6 @@ namespace JudoScoreboard.Forms.Controls
 
         private void BtnRemoveAzul_Click(object? sender, EventArgs e)
         {
-            // Remove a última ação do lutador azul
             switch (ultimaAcao)
             {
                 case LastAction.IpponAzul:
@@ -169,6 +218,9 @@ namespace JudoScoreboard.Forms.Controls
                     break;
                 case LastAction.WazaAzul:
                     if (wazaAzul > 0) wazaAzul--;
+                    break;
+                case LastAction.YukoAzul:
+                    if (yukoAzul > 0) yukoAzul--;
                     break;
                 case LastAction.ShidoAzul:
                     if (shidoAzul > 0) shidoAzul--;
@@ -193,11 +245,17 @@ namespace JudoScoreboard.Forms.Controls
             ultimaAcao = LastAction.WazaBranco;
             AtualizarPontuacoes();
 
-            // 2 Waza-ari = Ippon
             if (wazaBranco >= 2)
             {
                 VerificarVitoria("BRANCO", "2x WAZA-ARI = IPPON");
             }
+        }
+
+        private void BtnYukoBranco_Click(object? sender, EventArgs e)
+        {
+            yukoBranco++;
+            ultimaAcao = LastAction.YukoBranco;
+            AtualizarPontuacoes();
         }
 
         private void BtnShidoBranco_Click(object? sender, EventArgs e)
@@ -208,7 +266,6 @@ namespace JudoScoreboard.Forms.Controls
                 ultimaAcao = LastAction.ShidoBranco;
                 AtualizarPontuacoes();
 
-                // 3 Shidos = Hansoku-make (desqualificação)
                 if (shidoBranco == 3)
                 {
                     VerificarVitoria("AZUL", "HANSOKU-MAKE (3 Shidos do Branco)");
@@ -218,7 +275,6 @@ namespace JudoScoreboard.Forms.Controls
 
         private void BtnRemoveBranco_Click(object? sender, EventArgs e)
         {
-            // Remove a última ação do lutador branco
             switch (ultimaAcao)
             {
                 case LastAction.IpponBranco:
@@ -226,6 +282,9 @@ namespace JudoScoreboard.Forms.Controls
                     break;
                 case LastAction.WazaBranco:
                     if (wazaBranco > 0) wazaBranco--;
+                    break;
+                case LastAction.YukoBranco:
+                    if (yukoBranco > 0) yukoBranco--;
                     break;
                 case LastAction.ShidoBranco:
                     if (shidoBranco > 0) shidoBranco--;
@@ -240,7 +299,6 @@ namespace JudoScoreboard.Forms.Controls
         {
             if (isRunning)
             {
-                // Pausar
                 timer.Stop();
                 isRunning = false;
                 btnPlayPause.Text = "▶ CONTINUAR";
@@ -248,7 +306,6 @@ namespace JudoScoreboard.Forms.Controls
             }
             else
             {
-                // Iniciar/Continuar
                 timer.Start();
                 isRunning = true;
                 btnPlayPause.Text = "⏸ PAUSAR";
@@ -269,13 +326,16 @@ namespace JudoScoreboard.Forms.Controls
             {
                 timer.Stop();
                 isRunning = false;
+                isGoldenScore = false;
 
                 ipponAzul = 0;
                 wazaAzul = 0;
+                yukoAzul = 0;
                 shidoAzul = 0;
 
                 ipponBranco = 0;
                 wazaBranco = 0;
+                yukoBranco = 0;
                 shidoBranco = 0;
 
                 tempoRestante = tempoTotal;
@@ -325,8 +385,8 @@ namespace JudoScoreboard.Forms.Controls
         private void DeterminarVencedor()
         {
             // Lógica de desempate por pontos
-            int pontosAzul = (ipponAzul * 10) + (wazaAzul * 5) - shidoAzul;
-            int pontosBranco = (ipponBranco * 10) + (wazaBranco * 5) - shidoBranco;
+            int pontosAzul = (ipponAzul * 100) + (wazaAzul * 10) + (yukoAzul * 5) - (shidoAzul * 10);
+            int pontosBranco = (ipponBranco * 100) + (wazaBranco * 10) + (yukoBranco * 5) - (shidoBranco * 10);
 
             string resultado;
             if (pontosAzul > pontosBranco)
