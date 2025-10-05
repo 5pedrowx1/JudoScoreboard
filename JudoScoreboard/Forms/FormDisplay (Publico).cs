@@ -1,163 +1,21 @@
-using JudoScoreboard.Forms.Controls;
+ï»¿using JudoScoreboard.Core;
 
 namespace JudoScoreboard.Forms
 {
     public partial class FormDisplay : Form
     {
-        private Label lblNomeAzul;
-        private Label lblNomeBranco;
-        private Label lblCategoria;
-        private Label lblTimer;
-        private Label lblIpponAzul;
-        private Label lblWazaAzul;
-        private Label lblShidoAzul;
-        private Label lblIpponBranco;
-        private Label lblWazaBranco;
-        private Label lblShidoBranco;
-        private Panel panelAzul;
-        private Panel panelBranco;
-        private Panel panelCentro;
+        private bool isGoldenScore = false;
 
         public FormDisplay()
         {
             InitializeComponent();
-            InicializarComponentesDisplay();
+            this.Load += FormDisplay_Load;
         }
 
-        private void InicializarComponentesDisplay()
+        private void FormDisplay_Load(object? sender, EventArgs e)
         {
-            this.BackColor = Color.FromArgb(15, 15, 15);
-
-            // Panel Azul (Esquerda)
-            panelAzul = new Panel
-            {
-                BackColor = Color.FromArgb(0, 51, 102),
-                Dock = DockStyle.Left,
-                Width = (int)(this.Width * 0.35)
-            };
-            this.Controls.Add(panelAzul);
-
-            // Panel Branco (Direita)
-            panelBranco = new Panel
-            {
-                BackColor = Color.FromArgb(240, 240, 240),
-                Dock = DockStyle.Right,
-                Width = (int)(this.Width * 0.35)
-            };
-            this.Controls.Add(panelBranco);
-
-            // Panel Centro
-            panelCentro = new Panel
-            {
-                BackColor = Color.FromArgb(25, 25, 25),
-                Dock = DockStyle.Fill
-            };
-            this.Controls.Add(panelCentro);
-
-            // ===== AZUL =====
-            lblNomeAzul = new Label
-            {
-                Text = "LUTADOR AZUL",
-                Font = new Font("Arial Black", 32, FontStyle.Bold),
-                ForeColor = Color.White,
-                TextAlign = ContentAlignment.MiddleCenter,
-                Dock = DockStyle.Top,
-                Height = 100,
-                BackColor = Color.Transparent
-            };
-            panelAzul.Controls.Add(lblNomeAzul);
-
-            // Pontuações Azul
-            int yPos = 150;
-            lblIpponAzul = CriarLabelPontuacao("0", Color.White, panelAzul, yPos, "IPPON");
-            lblWazaAzul = CriarLabelPontuacao("0", Color.White, panelAzul, yPos + 180, "WAZA-ARI");
-            lblShidoAzul = CriarLabelPontuacao("0", Color.Yellow, panelAzul, yPos + 360, "SHIDO");
-
-            // ===== BRANCO =====
-            lblNomeBranco = new Label
-            {
-                Text = "LUTADOR BRANCO",
-                Font = new Font("Arial Black", 32, FontStyle.Bold),
-                ForeColor = Color.Black,
-                TextAlign = ContentAlignment.MiddleCenter,
-                Dock = DockStyle.Top,
-                Height = 100,
-                BackColor = Color.Transparent
-            };
-            panelBranco.Controls.Add(lblNomeBranco);
-
-            // Pontuações Branco
-            lblIpponBranco = CriarLabelPontuacao("0", Color.Black, panelBranco, yPos, "IPPON");
-            lblWazaBranco = CriarLabelPontuacao("0", Color.Black, panelBranco, yPos + 180, "WAZA-ARI");
-            lblShidoBranco = CriarLabelPontuacao("0", Color.Orange, panelBranco, yPos + 360, "SHIDO");
-
-            // ===== CENTRO =====
-            lblCategoria = new Label
-            {
-                Text = "CATEGORIA",
-                Font = new Font("Arial", 24, FontStyle.Bold),
-                ForeColor = Color.Gray,
-                TextAlign = ContentAlignment.MiddleCenter,
-                Location = new Point(0, 50),
-                Size = new Size(panelCentro.Width, 50),
-                BackColor = Color.Transparent
-            };
-            panelCentro.Controls.Add(lblCategoria);
-
-            lblTimer = new Label
-            {
-                Text = "00:00",
-                Font = new Font("Digital-7", 120, FontStyle.Bold),
-                ForeColor = Color.LightGreen,
-                TextAlign = ContentAlignment.MiddleCenter,
-                Location = new Point(0, 200),
-                Size = new Size(panelCentro.Width, 200),
-                BackColor = Color.Transparent
-            };
-            panelCentro.Controls.Add(lblTimer);
-
-            // Ajustar ao redimensionar
-            this.Resize += FormDisplay_Resize;
-        }
-
-        private Label CriarLabelPontuacao(string texto, Color cor, Panel parent, int y, string titulo)
-        {
-            // Label do título
-            Label lblTitulo = new Label
-            {
-                Text = titulo,
-                Font = new Font("Arial Black", 18, FontStyle.Bold),
-                ForeColor = Color.Gray,
-                TextAlign = ContentAlignment.MiddleCenter,
-                Location = new Point(20, y - 40),
-                Size = new Size(parent.Width - 40, 40),
-                BackColor = Color.Transparent
-            };
-            parent.Controls.Add(lblTitulo);
-
-            // Label da pontuação
-            Label lbl = new Label
-            {
-                Text = texto,
-                Font = new Font("Arial Black", 80, FontStyle.Bold),
-                ForeColor = cor,
-                TextAlign = ContentAlignment.MiddleCenter,
-                Location = new Point(20, y),
-                Size = new Size(parent.Width - 40, 120),
-                BackColor = Color.Transparent
-            };
-            parent.Controls.Add(lbl);
-
-            return lbl;
-        }
-
-        private void FormDisplay_Resize(object? sender, EventArgs e)
-        {
-            if (panelCentro != null)
-            {
-                lblCategoria.Size = new Size(panelCentro.Width, 50);
-                lblTimer.Size = new Size(panelCentro.Width, 200);
-            }
+            lblEstado.Text = "";
+            ResetarShidos();
         }
 
         public void AtualizarDisplay(MatchData data)
@@ -168,29 +26,229 @@ namespace JudoScoreboard.Forms
                 return;
             }
 
-            lblNomeAzul.Text = data.NomeAzul.ToUpper();
+            // Atualizar nomes
             lblNomeBranco.Text = data.NomeBranco.ToUpper();
+            lblNomeAzul.Text = data.NomeAzul.ToUpper();
             lblCategoria.Text = data.Categoria.ToUpper();
 
+            // Atualizar timer
             int minutos = data.TempoRestante / 60;
             int segundos = data.TempoRestante % 60;
-            lblTimer.Text = $"{minutos:D2}:{segundos:D2}";
+            lblTimer.Text = $"{minutos}:{segundos:D2}";
 
-            // Mudar cor do timer
-            if (data.TempoRestante <= 30 && data.TempoRestante > 0)
-                lblTimer.ForeColor = Color.Orange;
-            else if (data.TempoRestante == 0)
+            // Detectar Golden Score
+            if (data.TempoRestante == 0 && !isGoldenScore)
+            {
+                isGoldenScore = true;
+            }
+
+            // Mudar cor do timer e mensagens
+            if (isGoldenScore)
+            {
                 lblTimer.ForeColor = Color.Red;
-            else
-                lblTimer.ForeColor = Color.LightGreen;
+                lblEstado.Text = "Golden Score";
+                lblEstado.ForeColor = Color.Yellow;
+            }
+            else if (data.TempoRestante <= 30 && data.IsRunning)
+            {
+                lblTimer.ForeColor = Color.Orange;
+                lblEstado.Text = "";
+            }
+            else if (data.IsRunning)
+            {
+                lblTimer.ForeColor = Color.FromArgb(0, 255, 0);
+                lblEstado.Text = "";
+            }
+            else if (!data.IsRunning && data.TempoRestante > 0)
+            {
+                lblTimer.ForeColor = Color.Red;
+                lblEstado.Text = "";
+            }
 
-            lblIpponAzul.Text = data.IpponAzul.ToString();
-            lblWazaAzul.Text = data.WazaAzul.ToString();
-            lblShidoAzul.Text = data.ShidoAzul.ToString();
+            // Estado Continue para continuar apÃ³s golden score
+            if (isGoldenScore && data.IsRunning)
+            {
+                lblEstado.Text = "Continue";
+            }
 
+            // Atualizar pontuaÃ§Ãµes
             lblIpponBranco.Text = data.IpponBranco.ToString();
             lblWazaBranco.Text = data.WazaBranco.ToString();
-            lblShidoBranco.Text = data.ShidoBranco.ToString();
+            lblIpponAzul.Text = data.IpponAzul.ToString();
+            lblWazaAzul.Text = data.WazaAzul.ToString();
+
+            // Atualizar Shidos com indicador visual
+            AtualizarShidos(lblShido1Branco, lblShido2Branco, lblShido3Branco, data.ShidoBranco, false);
+            AtualizarShidos(lblShido1Azul, lblShido2Azul, lblShido3Azul, data.ShidoAzul, true);
+
+            // Verificar vencedor
+            string vencedor = "";
+            if (data.IpponBranco > 0 || data.WazaBranco >= 2 || data.ShidoAzul >= 3)
+            {
+                vencedor = "WHITE";
+                HighlightVencedor(PanelBranco, lblNomeBranco, true);
+                ResetHighlight(PanelAzul, lblNomeAzul, false);
+            }
+            else if (data.IpponAzul > 0 || data.WazaAzul >= 2 || data.ShidoBranco >= 3)
+            {
+                vencedor = "BLUE";
+                HighlightVencedor(PanelAzul, lblNomeAzul, false);
+                ResetHighlight(PanelBranco, lblNomeBranco, true);
+            }
+            else
+            {
+                ResetHighlight(PanelBranco, lblNomeBranco, true);
+                ResetHighlight(PanelAzul, lblNomeAzul, false);
+            }
+
+            if (!string.IsNullOrEmpty(vencedor))
+            {
+                lblEstado.Text = $"Winner {vencedor}";
+                lblEstado.ForeColor = vencedor == "BLUE" ? Color.Cyan : Color.White;
+            }
+
+            this.Refresh();
+        }
+
+        private void AtualizarShidos(Label shido1, Label shido2, Label shido3, int quantidade, bool isAzul)
+        {
+            Color activeColor = Color.Yellow;
+            Color inactiveColor = isAzul ? Color.FromArgb(0, 51, 153) : Color.White;
+            Color redColor = Color.Red;
+
+            // Resetar todos
+            shido1.BackColor = inactiveColor;
+            shido2.BackColor = inactiveColor;
+            shido3.BackColor = inactiveColor;
+            shido1.Text = "";
+            shido2.Text = "";
+            shido3.Text = "";
+
+            // Ativar os shidos necessÃ¡rios
+            if (quantidade >= 1)
+            {
+                shido1.BackColor = activeColor;
+            }
+            if (quantidade >= 2)
+            {
+                shido2.BackColor = activeColor;
+            }
+            if (quantidade >= 3)
+            {
+                shido3.BackColor = redColor;
+                shido3.Text = "H";
+                shido3.Font = new Font("Arial Black", 16F, FontStyle.Bold);
+                shido3.ForeColor = Color.White;
+                shido3.TextAlign = ContentAlignment.MiddleCenter;
+            }
+        }
+
+        private void ResetarShidos()
+        {
+            lblShido1Branco.BackColor = Color.White;
+            lblShido2Branco.BackColor = Color.White;
+            lblShido3Branco.BackColor = Color.White;
+            lblShido1Azul.BackColor = Color.FromArgb(0, 51, 153);
+            lblShido2Azul.BackColor = Color.FromArgb(0, 51, 153);
+            lblShido3Azul.BackColor = Color.FromArgb(0, 51, 153);
+
+            lblShido1Branco.Text = "";
+            lblShido2Branco.Text = "";
+            lblShido3Branco.Text = "";
+            lblShido1Azul.Text = "";
+            lblShido2Azul.Text = "";
+            lblShido3Azul.Text = "";
+        }
+
+        private void HighlightVencedor(Guna.UI2.WinForms.Guna2Panel panel, Guna.UI2.WinForms.Guna2HtmlLabel label, bool isBranco)
+        {
+            if (isBranco)
+            {
+                panel.BackColor = Color.FromArgb(255, 215, 0); // Dourado
+                label.ForeColor = Color.Black;
+            }
+            else
+            {
+                panel.BackColor = Color.FromArgb(0, 200, 255); // Azul claro
+                label.ForeColor = Color.Black;
+            }
+        }
+
+        private void ResetHighlight(Guna.UI2.WinForms.Guna2Panel panel, Guna.UI2.WinForms.Guna2HtmlLabel label, bool isBranco)
+        {
+            if (isBranco)
+            {
+                panel.BackColor = Color.White;
+                label.ForeColor = Color.Black;
+            }
+            else
+            {
+                panel.BackColor = Color.FromArgb(0, 51, 153);
+                label.ForeColor = Color.White;
+            }
+        }
+
+        public void MostrarMensagem(string mensagem, Color cor)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => MostrarMensagem(mensagem, cor)));
+                return;
+            }
+
+            lblEstado.Text = mensagem;
+            lblEstado.ForeColor = cor;
+        }
+
+        public void IniciarGoldenScore()
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(IniciarGoldenScore));
+                return;
+            }
+
+            isGoldenScore = true;
+            lblEstado.Text = "Golden Score";
+            lblEstado.ForeColor = Color.Yellow;
+            lblTimer.ForeColor = Color.Red;
+        }
+
+        public void ResetarDisplay()
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(ResetarDisplay));
+                return;
+            }
+
+            isGoldenScore = false;
+
+            lblNomeAzul.Text = "BLUE";
+            lblNomeBranco.Text = "WHITE";
+            lblCategoria.Text = "C$ -81 kg";
+            lblTimer.Text = "0:00";
+            lblEstado.Text = "";
+
+            lblIpponAzul.Text = "0";
+            lblWazaAzul.Text = "0";
+            lblIpponBranco.Text = "0";
+            lblWazaBranco.Text = "0";
+
+            ResetarShidos();
+
+            // Restaurar cores
+            PanelAzul.BackColor = Color.FromArgb(0, 51, 153);
+            PanelBranco.BackColor = Color.White;
+            lblNomeAzul.ForeColor = Color.White;
+            lblNomeBranco.ForeColor = Color.Black;
+            lblTimer.ForeColor = Color.FromArgb(0, 255, 0);
+            lblEstado.ForeColor = Color.White;
+
+            lblIpponAzul.ForeColor = Color.White;
+            lblWazaAzul.ForeColor = Color.White;
+            lblIpponBranco.ForeColor = Color.Black;
+            lblWazaBranco.ForeColor = Color.Black;
         }
     }
 }
