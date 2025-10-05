@@ -4,16 +4,32 @@ namespace JudoScoreboard
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
+        private static FormDisplay? displayForm;
+        private static FormControl? controlForm;
+
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new FormControl());
+
+            // Criar FormDisplay (Público - Tela cheia)
+            displayForm = new FormDisplay();
+            displayForm.Show();
+
+            // Criar FormControl (Arbitragem - Janela menor)
+            controlForm = new FormControl();
+
+            // Quando o controle fecha, fechar o display também
+            controlForm.FormClosed += (s, e) =>
+            {
+                displayForm?.Close();
+                Application.Exit();
+            };
+
+            // Conectar sincronização (será implementado no FormControl)
+            // Quando houver mudança no FormControl, atualizar o FormDisplay
+
+            Application.Run(controlForm);
         }
     }
 }
